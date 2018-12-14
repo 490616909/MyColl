@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="great.mapper.TransferMapper">
+  <insert id="upload" parameterType="great.entity.Transfer" >
+	insert into t_transfer(transId,transName,transUser,transScore,transType,transUrl) values(seq_t_transfer.nextval,#{transName},#{transUser},#{transScore},#{transType},#{transUrl})
+  </insert>
+   <select id="findRecordCount" parameterType="great.entity.Transfer" resultType="int">
+	select count(0) from t_transfer
+	<where>
+	<if test="transName!=null and transName!=''">
+		and transName like '%${transName}%'
+	</if>
+	</where>
+	</select>
+   <select id="findPageRecords" parameterType="great.entity.Transfer" resultType="great.entity.Transfer">
+  	select * from (select a.*,ROWNUM RN from t_transfer a where ROWNUM &lt; #{endIndex}
+	<if test="transName!=null and transName!=''">
+		and transName like '%${transName}%'
+	</if>
+	 )where RN>#{startIndex}
+  </select>
+</mapper>

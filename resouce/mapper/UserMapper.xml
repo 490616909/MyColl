@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="great.mapper.UserMapper">
+	<insert id="register" parameterType="great.entity.User">
+		insert into
+		t_user(userId,userName,userPwd,userSex,userMajor,userJob,userPhone,userEmail)
+		values(seq_t_user.nextval,#{userName},#{userPwd},#{userSex},#{userMajor},#{userJob},#{userPhone},#{userEmail})
+	</insert>
+	<select id="login" parameterType="great.entity.User"
+		resultType="great.entity.User">
+		select * from t_user where userName=#{userName} and userPwd=#{userPwd}
+	</select>
+	<select id="namecheck" parameterType="great.entity.User"
+		resultType="great.entity.User">
+		select userName from t_user where userName=#{userName}
+	</select>
+	<insert id="reset" parameterType="great.entity.User">
+		update t_user set userPwd = #{userPwd} where userName=#{userName}
+	</insert>
+</mapper>
+  
